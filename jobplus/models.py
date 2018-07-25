@@ -20,21 +20,16 @@ class User(Base, UserMixin):
     ROLE_COMPANY= 20
     ROLE_ADMIN = 30
 
-    # id, password,  email, job, role, work_year, name, phone, resumn 
+    # id, username, password, email, role, phone 
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), unique=True, index=True, nullable=False)
+    username = db.Column(db.String(32), unique=True, index=True, nullable=False)
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     _password = db.Column('password', db.String(256), nullable=False)
-
-    job = db.Column(db.String(64))
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
-    company = db.relationship('Company')
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
-    work_year = db.Column(db.SmallInteger)
-    name = db.Column(db.String(32))
     phone = db.Column(db.Integer, unique=True, index=True)
-    resume = db.Column(db.String(256), unique=True)
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
+    company = db.relationship('Company', uselist=False)
+
 
     def __repr__(self):
         return '<User:{}>'.format(self.username)
@@ -57,19 +52,39 @@ class User(Base, UserMixin):
     @property
     def is_company(self):
         return self.role == self.ROLE_COMPANY
+
+
+class Resume():
+    __tablename__ = 'resume'
+
+    # id, degree, job, work_year, resume 
+
+    id = db.Column(db.Integer, primary_key=True)
+    degree = db.Column(db.String(32), index=True, nullable=False)
+    job = db.Column(db.String(64), index=True, nullable=False)
+    work_year = db.Column(db.SmallInteger, index=True, nullable=False)
+    resume = db.Column(db.String(256), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    user = db.relationship('User', uselist=False)
+
+    def __repr__(self):
+        return '<Resume:{}>'.format(self.id)
         
 
 class Company(Base):
     __tablename__ = 'company'
 
-    # id, jobs, address, website, logo, description
+    # id, name, jobs, address, website, logo, description
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), unique=True, index=True, nullable=False)
     description = db.Column(db.String(128))
     logo = db.Column(db.String(128))
     website = db.Column(db.String(128), unique=True)
     address = db.Column(db.String(128), nullable=False)
-    jobs = db.relationShip('Job')
+    jobs = db.relationship('Job', uselist=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    user = db.relationship('User', uselist=False)
 
     def __repr__(self):
         return '<Company:{}>'.format(self.name)
@@ -83,9 +98,11 @@ class Job(Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True, index=True, nullable=False)
     description = db.Column(db.String(128))
+    degree = db.Column(db.String(32), index=True, nullable=False)
+    work_year = db.Column(db.SmallInteger)
     tags = db.Column(db.String(128), nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
-    company = db.relationship('Company')
+    company = db.relationship('Company', uselist=False)
 
     def __repr__(self):
         return '<Job:{}>'.format(self.name)
