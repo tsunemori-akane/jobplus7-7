@@ -11,5 +11,5 @@ LouPlus Team 7 https://github.com/LouPlus/jobplus7-7
 ## requirements 依赖包
 强制以python3来安装依赖包
 ```python
-sudo python3 -m pip3 install -r requirements.txt
+sudo python3 -m pip install -r requirements.txt
 ```
