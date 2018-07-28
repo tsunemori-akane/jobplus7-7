@@ -35,7 +35,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError('The email has already existed')
     def create_user(self):
         user = User()
-        user.username = self.username.data
+        user.username = self.name.data
         user.email = self.email.data
         user.password = self.password.data
         db.session.add(user)
