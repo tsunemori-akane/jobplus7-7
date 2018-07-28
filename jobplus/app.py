@@ -4,6 +4,7 @@ from jobplus.models import db, User
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
+
 def register_blueprints(app):
     from .handlers import front 
     app.register_blueprint(front)
