@@ -13,3 +13,18 @@ LouPlus Team 7 https://github.com/LouPlus/jobplus7-7
 ```python
 sudo python3 -m pip install -r requirements.txt
 ```
+
+## 添加测试数据
+创建数据库jobplus
+
+
+```python
+flask db upgrade
+
+flask shell
+
+from scripts.generate_test_datas import run
+run()
+```
+
+
