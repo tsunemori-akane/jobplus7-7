@@ -8,7 +8,22 @@ Register
 
 {% block body %}
 <div class="form">
-    <h2>Corp.</h2>
-    {{ render_form(form, url_for('front.corpregister')) }}
+    <h2>Corp register</h2>
+    <form method="POST" action="{{ url_for('front.corpregister') }}">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.name.label }} {{ form.name(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }} {{ form.email(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.confirm_password.label }} {{ form.confirm_password(class='form-control') }}
+        </div>
+        {{ form.submit(class='btn btn-primary', type='submit') }}
+    </form>
 </div>
 {% endblock %}
