@@ -1,5 +1,16 @@
-body {
-  background-color: #f7f7f7;
+.job_item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.center {
+  text-align: center;
+}
+.index_title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .form {
     width: 400px;

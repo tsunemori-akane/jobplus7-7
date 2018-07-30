@@ -20,15 +20,13 @@ class User(Base, UserMixin):
     ROLE_COMPANY= 20
     ROLE_ADMIN = 30
 
-    # id, username, password, email, role, phone 
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), unique=True, index=True, nullable=False)
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     _password = db.Column('password', db.String(256), nullable=False)
-    phone = db.Column(db.Integer, unique=True, index=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
     company = db.relationship('Company', uselist=False)
+    resume = db.relationship('Resume', uselist=False)
 
 
     def __repr__(self):
@@ -54,53 +52,51 @@ class User(Base, UserMixin):
         return self.role == self.ROLE_COMPANY
 
 
-class Resume():
+class Resume(Base):
     __tablename__ = 'resume'
 
-    # id, degree, job, work_year, resume 
-
     id = db.Column(db.Integer, primary_key=True)
-    degree = db.Column(db.String(32), index=True, nullable=False)
-    job = db.Column(db.String(64), index=True, nullable=False)
-    work_year = db.Column(db.SmallInteger, index=True, nullable=False)
-    resume = db.Column(db.String(256), unique=True, nullable=False)
+    name = db.Column(db.String(32), index=True, nullable=False)
+    phone = db.Column(db.String(11), index=True)
+    degree = db.Column(db.String(32), index=True) 
+    job = db.Column(db.String(64), index=True) 
+    work_year = db.Column(db.SmallInteger, index=True) 
+    resume_url = db.Column(db.String(256)) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
 
     def __repr__(self):
-        return '<Resume:{}>'.format(self.id)
+        return '<Resume:{}>'.format(self.name)
         
 
 class Company(Base):
     __tablename__ = 'company'
 
-    # id, name, jobs, address, website, logo, description
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True, index=True, nullable=False)
+    phone = db.Column(db.String(11), index=True)
     description = db.Column(db.String(128))
     logo = db.Column(db.String(128))
-    website = db.Column(db.String(128), unique=True)
-    address = db.Column(db.String(128), nullable=False)
-    jobs = db.relationship('Job', uselist=False)
+    website = db.Column(db.String(128))
+    city = db.Column(db.String(64)) 
+    address = db.Column(db.String(128)) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
 
     def __repr__(self):
-        return '<Company:{}>'.format(self.name)
+        return '<Company:{}>'.format(self.id)
 
 
 class Job(Base):
     __tablename__ = 'job'
 
-    #id, name, tags, description
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True, index=True, nullable=False)
     description = db.Column(db.String(128))
-    degree = db.Column(db.String(32), index=True, nullable=False)
+    degree = db.Column(db.String(32), index=True) 
     work_year = db.Column(db.SmallInteger)
-    tags = db.Column(db.String(128), nullable=False)
+    tags = db.Column(db.String(128))
+    salary = db.Column(db.String(20))
     company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
     company = db.relationship('Company', uselist=False)
 
