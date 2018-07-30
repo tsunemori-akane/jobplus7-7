@@ -6,8 +6,10 @@ from flask_migrate import Migrate
 
 
 def register_blueprints(app):
-    from .handlers import front 
+    from .handlers import front, user, company 
     app.register_blueprint(front)
+    app.register_blueprint(user)
+    app.register_blueprint(company)
 
 
 def register_extensions(app):

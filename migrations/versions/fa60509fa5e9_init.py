@@ -1,8 +1,8 @@
-"""init database
+"""init
 
-Revision ID: dc688e67f271
+Revision ID: fa60509fa5e9
 Revises: 
-Create Date: 2018-07-25 15:06:37.149977
+Create Date: 2018-07-30 16:50:19.859521
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc688e67f271'
+revision = 'fa60509fa5e9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,37 +25,57 @@ def upgrade():
     sa.Column('username', sa.String(length=32), nullable=False),
     sa.Column('email', sa.String(length=64), nullable=False),
     sa.Column('password', sa.String(length=256), nullable=False),
-    sa.Column('phone', sa.Integer(), nullable=True),
     sa.Column('role', sa.SmallInteger(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
-    op.create_index(op.f('ix_user_phone'), 'user', ['phone'], unique=True)
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('company',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=32), nullable=False),
+    sa.Column('phone', sa.String(length=11), nullable=True),
     sa.Column('description', sa.String(length=128), nullable=True),
     sa.Column('logo', sa.String(length=128), nullable=True),
     sa.Column('website', sa.String(length=128), nullable=True),
-    sa.Column('address', sa.String(length=128), nullable=False),
+    sa.Column('city', sa.String(length=64), nullable=True),
+    sa.Column('address', sa.String(length=128), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('website')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_company_name'), 'company', ['name'], unique=True)
+    op.create_index(op.f('ix_company_phone'), 'company', ['phone'], unique=False)
+    op.create_table('resume',
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=32), nullable=False),
+    sa.Column('phone', sa.String(length=11), nullable=True),
+    sa.Column('degree', sa.String(length=32), nullable=True),
+    sa.Column('job', sa.String(length=64), nullable=True),
+    sa.Column('work_year', sa.SmallInteger(), nullable=True),
+    sa.Column('resume_url', sa.String(length=256), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_resume_degree'), 'resume', ['degree'], unique=False)
+    op.create_index(op.f('ix_resume_job'), 'resume', ['job'], unique=False)
+    op.create_index(op.f('ix_resume_name'), 'resume', ['name'], unique=False)
+    op.create_index(op.f('ix_resume_phone'), 'resume', ['phone'], unique=False)
+    op.create_index(op.f('ix_resume_work_year'), 'resume', ['work_year'], unique=False)
     op.create_table('job',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=32), nullable=False),
     sa.Column('description', sa.String(length=128), nullable=True),
-    sa.Column('degree', sa.String(length=32), nullable=False),
+    sa.Column('degree', sa.String(length=32), nullable=True),
     sa.Column('work_year', sa.SmallInteger(), nullable=True),
-    sa.Column('tags', sa.String(length=128), nullable=False),
+    sa.Column('tags', sa.String(length=128), nullable=True),
+    sa.Column('salary', sa.String(length=20), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
@@ -70,10 +90,16 @@ def downgrade():
     op.drop_index(op.f('ix_job_name'), table_name='job')
     op.drop_index(op.f('ix_job_degree'), table_name='job')
     op.drop_table('job')
+    op.drop_index(op.f('ix_resume_work_year'), table_name='resume')
+    op.drop_index(op.f('ix_resume_phone'), table_name='resume')
+    op.drop_index(op.f('ix_resume_name'), table_name='resume')
+    op.drop_index(op.f('ix_resume_job'), table_name='resume')
+    op.drop_index(op.f('ix_resume_degree'), table_name='resume')
+    op.drop_table('resume')
+    op.drop_index(op.f('ix_company_phone'), table_name='company')
     op.drop_index(op.f('ix_company_name'), table_name='company')
     op.drop_table('company')
     op.drop_index(op.f('ix_user_username'), table_name='user')
-    op.drop_index(op.f('ix_user_phone'), table_name='user')
     op.drop_index(op.f('ix_user_email'), table_name='user')
     op.drop_table('user')
     # ### end Alembic commands ###

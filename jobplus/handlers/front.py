@@ -7,7 +7,8 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
-    return render_template('index.html')
+    jobs = Job.query.all()
+    return render_template('index.html', jobs=jobs)
 
 @front.route('/login', methods=['GET','POST'])
 def login():
@@ -15,7 +16,9 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user,form.remember_me.data)
-        return redirect(url_for('.index'))
+        if user.role == User.ROLE_COMPANY:
+            return redirect(url_for('company.profile'))
+        return redirect(url_for('user.profile'))
     return render_template('login.html', form=form)
 
 @front.route('/user-register', methods=['GET','POST'])
@@ -27,11 +30,11 @@ def userregister():
         return redirect(url_for('.login'))
     return render_template('user_register.html', form=form)
 
-@front.route('/corp-register')
+@front.route('/corp-register', methods=['GET','POST'])
 def corpregister():
     form = RegisterForm()
     if form.validate_on_submit():
-        form.create_user()
+        form.create_company()
         flash('Register Success', 'success')
         return redirect(url_for('.login'))
     return render_template('corp_register.html', form=form)
