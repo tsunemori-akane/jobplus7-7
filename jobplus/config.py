@@ -1,10 +1,12 @@
 class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'makesure to set a secret key'
+    INDEX_PER_PAGE = 9
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root@localhost:3306/jobplus?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root@localhost:3306/jobplus?charset=utf8'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProductionConfig(BaseConfig):
     pass

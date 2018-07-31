@@ -21,8 +21,8 @@ class User(Base, UserMixin):
     ROLE_ADMIN = 30
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(32), unique=True, index=True, nullable=False)
-    email = db.Column(db.String(64), unique=True, index=True, nullable=False)
+    username = db.Column(db.String(128), unique=True, index=True, nullable=False)
+    email = db.Column(db.String(128), unique=True, index=True, nullable=False)
     _password = db.Column('password', db.String(256), nullable=False)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
     company = db.relationship('Company', uselist=False)
@@ -56,12 +56,12 @@ class Resume(Base):
     __tablename__ = 'resume'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), index=True, nullable=False)
+    name = db.Column(db.String(32), unique=True, index=True, nullable=False)
     phone = db.Column(db.String(11), index=True)
-    degree = db.Column(db.String(32), index=True) 
-    job = db.Column(db.String(64), index=True) 
-    work_year = db.Column(db.SmallInteger, index=True) 
-    resume_url = db.Column(db.String(256)) 
+    degree = db.Column(db.String(32), index=True)
+    job = db.Column(db.String(64), index=True)
+    work_year = db.Column(db.SmallInteger, index=True)
+    resume_url = db.Column(db.String(256))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
 
@@ -80,6 +80,8 @@ class Company(Base):
     website = db.Column(db.String(128))
     city = db.Column(db.String(64)) 
     address = db.Column(db.String(128)) 
+    staff_num = db.Column(db.String(64))
+    industry = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
 
@@ -97,6 +99,8 @@ class Job(Base):
     work_year = db.Column(db.SmallInteger)
     tags = db.Column(db.String(128))
     salary = db.Column(db.String(20))
+    qualifications = db.Column(db.String(64))
+    location = db.Column(db.String(64))
     company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
     company = db.relationship('Company', uselist=False)
 

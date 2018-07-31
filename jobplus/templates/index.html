@@ -1,39 +1,49 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_pagination%}
 
-{% block title %}Index{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block head %}
+<div class="jumbotron">
+    <div class="container">
+    <h1>JOBPLUS</h1>
+    <p>找工作就上JOBPLUS</p>
+    </div>
+</div>
+{% endblock %}
 
 {% block body %}
-<div class="jumbotron">
-    <h1>JOBPLUS</h1>
-    <p>找工作，找工作，就上JOBPLUS</p>
-</div>
+<ul class="nav nav-tabs list-title">
+    <li role="presentation" class="active"><a href="#">New post</a></li>
+</ul>
 
-<div class='row'>
-    {% for job in jobs %}
-    <div class="col-md-4">
-        <div class="job_item">
+<div class="row">
+    {% for job in jobs.items %}
+    <div class="col-sm-6 col-md-4 course">
+        <div class="jobbox">
             <div class="caption">
-                <a href='/'><h3 class='index_title'>{{job.name}}</h3></a>
-                <p>经验{{ job.work_year }}年  学历{{ job.degree }}</p> 
+            <a href="#" >
+                <b>{{ job.name }}</b>
+                <p>{{ job.qualifications }}</p>
+                <span class="label label-default">{{ job.tags }}</span
+            </a>
             </div>
-            <hr />
-            <div class='media'>
-                <div class='media-left'>
-                    <img src="{{job.company.logo}}" class="media-object" width="100" height="50"/>
+            <div class="media">
+                <div class="media-left">
+                <a href="#">
+                    <img width="40" height="40" class="media-object" alt="job.company.name" src="job.company.logo">
+                </a>
                 </div>
-                <div class='media-body' style="vertical-align: middle">
-                    <h4 class='media-heading'>
-                        {{job.company.name}} 
-                    </h4>
-                </div>
+            <div class="media-body">
+                <a href='#'>
+                    <h4 class="media-heading">{{ job.company.name }}</h4>
+                </a>
+                <span>{{ job.company.address}}</span>
+            </div>
             </div>
         </div>
     </div>
     {% endfor %}
-
 </div>
-
-<div class="center">
-    <a class="btn btn-primary">查看更多</a>
-</div>
+{{ render_pagination(jobs, 'front.index')}}
 {% endblock %}
