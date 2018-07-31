@@ -105,3 +105,4 @@ venv.bak/
 
 .DS\_Store
 *.swp
+*.swo
