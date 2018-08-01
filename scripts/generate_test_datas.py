@@ -40,8 +40,6 @@ def iter_companies():
         )
 
 def iter_jobs():
-    for n in range(randint(0, 47)):
-        i = list(all_datas)[n]
         yield Job(
             name =i['post'],
             salary = i['salary'],
@@ -53,12 +51,12 @@ def iter_jobs():
 def run():
     for user in l:
        db.session.add(user)
-    '''
+'''    
     for company in iter_companies():
         db.session.add(company)
     for job in iter_jobs():
         db.session.add(job)
-    '''
+'''    
     try:
         db.session.commit()
     except Exception as e:

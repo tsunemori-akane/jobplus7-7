@@ -1,14 +1,14 @@
-from flask import Blueprint, render_template, url_for, flash, redirect
+from flask import Blueprint, render_template, url_for, flash, redirect, request, current_app
 from jobplus.forms import CompanyProfileForm
 from flask_login import login_required, current_user
-from jobplus.models import Company
+from jobplus.models import Company, User
 
-company = Blueprint('company', __name__, url_prefix='/companies')
+company = Blueprint('company', __name__, url_prefix='/company')
 
 @company.route('/')
 def index():
     page = request.args.get('page', default=1, type=int)
-    pagination = Company.query.filter_by(role=ROLE_COMPANY).paginate(
+    pagination = Company.query.paginate(
             page = page,
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False

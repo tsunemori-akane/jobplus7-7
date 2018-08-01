@@ -18,32 +18,31 @@
 </ul>
 
 <div class="row">
+    <div class="job-list">
     {% for job in jobs.items %}
-    <div class="col-sm-6 col-md-4 course">
-        <div class="jobbox">
-            <div class="caption">
-            <a href="#" >
-                <b>{{ job.name }}</b>
-                <p>{{ job.qualifications }}</p>
-                <span class="label label-default">{{ job.tags }}</span
-            </a>
-            </div>
-            <div class="media">
-                <div class="media-left">
-                <a href="#">
-                    <img width="40" height="40" class="media-object" alt="job.company.name" src="job.company.logo">
-                </a>
-                </div>
-            <div class="media-body">
-                <a href='#'>
-                    <h4 class="media-heading">{{ job.company.name }}</h4>
-                </a>
-                <span>{{ job.company.address}}</span>
-            </div>
-            </div>
-        </div>
-    </div>
+        {{ render_job(job) }}
     {% endfor %}
+    </div>
 </div>
-{{ render_pagination(jobs, 'front.index')}}
+
+<p class="list-more">
+<a href="{{ url_for('job.index') }}" class="btn btn-success btn-lg list-more-btn">More Job</a>
+</p
+
+<ul class="nav nav-tabs list-title">
+    <li role="presentation" class="active"><a href="#">Hot company</a></li>
+</ul>>
+
+<div class="row">
+    <div class="company-list">
+        {% for company in companies.items %}
+        {{ render_company(comapny) }}
+        {% endfor %}
+    </div>
+</div>
+
+<p class="list-more">
+<a href="{{ url_for('company.index') }}" class="btn btn-success btn-lg list-more-btn">More Company</a>
+</p>
+
 {% endblock %}

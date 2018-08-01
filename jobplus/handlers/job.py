@@ -1,9 +1,10 @@
-ifrom flask import (Blueprint, render_template, redirect, url_for, flash, abort, current_app, request
+from flask import (Blueprint, render_template, redirect, url_for, 
+    flash, abort, current_app, request)
 from jobplus.models import Job
 
-jobs = Blueprint('jobs', __name__, url_prefix='/jobs')
+job = Blueprint('job', __name__, url_prefix='/job')
 
-@jobs.route('/')
+@job.route('/')
 def index():
     page = request.args.get('page', default=1, type=int)
     pagination = Job.query.paginate(
