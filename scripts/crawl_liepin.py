@@ -17,9 +17,9 @@ class LiePinS(scrapy.Spider):
             yield{
                 'qualifications':response.css('div.job-qualifications span::text').extract(), 
                 'about-position':response.css('div.tag-list span::text').extract(),
-                'industry':response.css('ul.new-compintro li::text').extract()[0],
-                'company_size':response.css('ul.new-compintro li::text').extract()[1],
-                'company_address':response.css('ul.new-compintro li::text').extract()[2],
+                'industry':response.css('ul.new-compintro a::text').extract_first().strip(),
+                'company_size':response.css('ul.new-compintro li::text').extract()[2].strip(),
+                'company_address':response.css('ul.new-compintro li::text').extract()[3].strip(),
                 'company-logo':response.css('div.company-logo img::attr(src)').extract_first(),
                 'post':response.css('div.title-info h1::text').extract_first(),
                 'salary':response.css('div.job-title-left p::text').extract_first().strip(),

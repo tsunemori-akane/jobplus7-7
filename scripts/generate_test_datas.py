@@ -6,17 +6,14 @@ from jobplus.models import db, User, Company, Job
 
 fake = Faker('zh-cn')
 
-'''
-def json_process():
-    result = []
-    data = json.load(open('scripts/datas/job_company.json'))
-    for item in data:
-        if not item['company-name'] in result:
-            result.append(item)
-    return result
-'''
+
 with open(os.path.join(os.path.dirname(__file__), 'datas', 'job_company.json')) as f:
     all_datas = json.load(f)
+    for i in all_datas:
+        if i['company-name']=='厦门国际银行':
+            all_datas.remove(i)
+        
+
 
 def iter_users():
     for i in all_datas:
@@ -29,11 +26,10 @@ def iter_users():
 lt = list(iter_users())
 
 def iter_companies():
-    for m in lt:
-        for n in all_datas:    
-            if n['company-name']==m['username']:
+    
+        for n in all_datas:
                 yield Company(
-                    user = m,
+                    user = user,
                     name = n['company-name'],
                     logo = n['company-logo'],
                     staff_num = n['company_size'],
@@ -54,7 +50,7 @@ def iter_jobs():
             )
 
 def run():
-    for user in l:
+    for user in iter_users():
        db.session.add(user)
     
     for company in iter_companies():
