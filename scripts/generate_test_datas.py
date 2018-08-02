@@ -23,40 +23,45 @@ def iter_users():
         yield User(
             username = i['company-name'],
             email = fake.email(),
-            password = fake.password(),
+            password = '123456',
             role = User.ROLE_COMPANY
         )
-
-l = list(iter_users())
+lt = list(iter_users())
 
 def iter_companies():
-    for (x, y) in zip(l, list(all_datas)):
-        yield Company(
-            user = x,
-            logo = y['company-logo'],
-            staff_num = y['company_size'],
-            industry = y['industry'],
-            address = y['company_address']
-        )
+    for m in lt:
+        for n in all_datas:    
+            if n['company-name']==m['username']:
+                yield Company(
+                    user = m,
+                    name = n['company-name'],
+                    logo = n['company-logo'],
+                    staff_num = n['company_size'],
+                    industry = n['industry'],
+                    address = n['company_address']
+                )
 
 def iter_jobs():
-        yield Job(
-            name =i['post'],
-            salary = i['salary'],
-            location = i['location'],
-            tags = i['about-position'],
-            qualifications = i['qualifications']
-        )
+    for company in Company.query:
+        for i in all_datas():
+            yield Job(
+                company = company,
+                name =i['post'],
+                salary = i['salary'],
+                location = i['location'],
+                tags = i['about-position'],
+                qualifications = i['qualifications']
+            )
 
 def run():
     for user in l:
        db.session.add(user)
-'''    
+    
     for company in iter_companies():
         db.session.add(company)
     for job in iter_jobs():
         db.session.add(job)
-'''    
+    
     try:
         db.session.commit()
     except Exception as e:
