@@ -1,39 +1,48 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_pagination%}
 
-{% block title %}Index{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block head %}
+<div class="jumbotron">
+    <div class="container">
+    <h1>JOBPLUS</h1>
+    <p>找工作就上JOBPLUS</p>
+    </div>
+</div>
+{% endblock %}
 
 {% block body %}
-<div class="jumbotron">
-    <h1>JOBPLUS</h1>
-    <p>找工作，找工作，就上JOBPLUS</p>
-</div>
+<ul class="nav nav-tabs list-title">
+    <li role="presentation" class="active"><a href="#">New post</a></li>
+</ul>
 
-<div class='row'>
-    {% for job in jobs %}
-    <div class="col-md-4">
-        <div class="job_item">
-            <div class="caption">
-                <a href='/'><h3 class='index_title'>{{job.name}}</h3></a>
-                <p>经验{{ job.work_year }}年  学历{{ job.degree }}</p> 
-            </div>
-            <hr />
-            <div class='media'>
-                <div class='media-left'>
-                    <img src="{{job.company.logo}}" class="media-object" width="100" height="50"/>
-                </div>
-                <div class='media-body' style="vertical-align: middle">
-                    <h4 class='media-heading'>
-                        {{job.company.name}} 
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="row">
+    <div class="job-list">
+    {% for job in jobs.items %}
+        {{ render_job(job) }}
     {% endfor %}
-
+    </div>
 </div>
 
-<div class="center">
-    <a class="btn btn-primary">查看更多</a>
+<p class="list-more">
+<a href="{{ url_for('job.index') }}" class="btn btn-success btn-lg list-more-btn">More Job</a>
+</p>
+
+<ul class="nav nav-tabs list-title">
+    <li role="presentation" class="active"><a href="#">Hot company</a></li>
+</ul>
+
+<div class="row">
+    <div class="company-list">
+        {% for company in companies.items %}
+        {{ render_company(comapny) }}
+        {% endfor %}
+    </div>
 </div>
+
+<p class="list-more">
+<a href="{{ url_for('company.index') }}" class="btn btn-success btn-lg list-more-btn">More Company</a>
+</p>
+
 {% endblock %}
