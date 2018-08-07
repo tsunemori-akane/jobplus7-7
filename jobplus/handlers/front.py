@@ -7,6 +7,7 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
+<<<<<<< HEAD
     page = request.args.get('page', default=1, type=int)
     jobs = Job.query.paginate(
             page=page,
@@ -19,6 +20,10 @@ def index():
             error_out=False
             )
     return render_template('index.html', jobs=jobs, companies=companies, active='index')
+=======
+    jobs = Job.query.filter_by(is_disable=False).all()
+    return render_template('index.html', jobs=jobs)
+>>>>>>> now
 
 @front.route('/login', methods=['GET','POST'])
 def login():
@@ -28,7 +33,10 @@ def login():
         login_user(user,form.remember_me.data)
         if user.role == User.ROLE_COMPANY:
             return redirect(url_for('company.profile'))
-        return redirect(url_for('user.profile'))
+        elif user.role == User.ROLE_ADMIN:
+            return redirect(url_for('admin.users'))
+        else:
+            return redirect(url_for('user.profile'))
     return render_template('login.html', form=form)
 
 @front.route('/user-register', methods=['GET','POST'])

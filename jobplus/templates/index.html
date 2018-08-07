@@ -12,10 +12,38 @@
 </div>
 {% endblock %}
 
+<<<<<<< HEAD
 {% block body %}
 <ul class="nav nav-tabs list-title">
     <li role="presentation" class="active"><a href="#">New post</a></li>
 </ul>
+=======
+<div class='row'>
+    {% for job in jobs %}
+    {% if job.id < 10 %}
+    <div class="col-md-4">
+        <div class="job_item">
+            <div class="caption">
+                <p>{{ job.is_disable }}</p>
+                <a href='/'><h3 class='index_title'>{{job.name}}</h3></a>
+                <p>{{ job.work_year }}  {{ job.degree }}</p> 
+            </div>
+            <hr />
+            <div class='media'>
+                <div class='media-left'>
+                    <img src="{{job.company.logo}}" class="media-object" width="82" height="82"/>
+                </div>
+                <div class='media-body' style="vertical-align: middle">
+                    <h4 class='media-heading'>
+                        {{job.company.name}} 
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+>>>>>>> now
 
 <div class="row">
     <div class="job-list">

@@ -1,7 +1,11 @@
 class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'makesure to set a secret key'
+<<<<<<< HEAD
     INDEX_PER_PAGE = 9
+=======
+    ADMIN_PER_PAGE = 10 
+>>>>>>> now
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
