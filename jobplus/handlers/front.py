@@ -7,7 +7,7 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
-    jobs = Job.query.filter_by(is_disable=False).all()
+    jobs = Job.query.filter_by(is_disable=False).limit(9).all()
     return render_template('index.html', jobs=jobs)
 
 @front.route('/login', methods=['GET','POST'])
