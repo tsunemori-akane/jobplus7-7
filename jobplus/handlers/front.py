@@ -7,6 +7,20 @@ front = Blueprint('front', __name__)
 
 @front.route('/')
 def index():
+    '''
+    page = request.args.get('page', default=1, type=int)
+    jobs = Job.query.paginate(
+            page=page,
+            per_page=current_app.config['INDEX_PER_PAGE'],
+            error_out=False
+            )
+    companies = Company.query.paginate(
+            page=page,
+            per_page=current_app.config['INDEX_PER_PAGE'],
+            error_out=False
+            )
+    return render_template('index.html', jobs=jobs, companies=companies, active='index')
+    '''
     jobs = Job.query.filter_by(is_disable=False).limit(9).all()
     return render_template('index.html', jobs=jobs)
 

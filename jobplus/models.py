@@ -65,7 +65,6 @@ class Resume(Base):
     job = db.Column(db.String(64), index=True) 
     work_year = db.Column(db.SmallInteger, index=True) 
     resume_url = db.Column(db.String(256)) 
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
 
@@ -87,7 +86,6 @@ class Company(Base):
     industry = db.Column(db.String(64)) 
     address = db.Column(db.String(128))
     welfare = db.Column(db.String(128)) 
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     user = db.relationship('User', uselist=False)
     job = db.relationship('Job', uselist=False)
@@ -106,9 +104,7 @@ class Job(Base):
     work_year = db.Column(db.String(32), index=True)
     tags = db.Column(db.String(128))
     salary = db.Column(db.String(20))
-
     is_disable = db.Column(db.Boolean, default=False)
-
     company_id = db.Column(db.Integer, db.ForeignKey('company.id', ondelete='CASCADE'))
     company = db.relationship('Company', uselist=False)
 
