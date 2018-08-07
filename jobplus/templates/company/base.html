@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Admin
+Company - Admin
 {% endblock %}
 
 
 {% block body %}
 <div class='row'>
     <div class="col-md-3">
-        <h4>管理</h4>    
+        <h4>公司管理</h4>    
         <div class="list-group">
-            <a href='{{ url_for('admin.users') }}' class="list-group-item">用户</a>
-            <a href='{{ url_for('admin.courses') }}' class="list-group-item">课程</a>
-            <a href='{{ url_for('admin.lives') }}' class="list-group-item">直播</a>
+            <a href='#' class="list-group-item">职位管理</a>
+            <a href='#' class="list-group-item">投递管理</a>
         </div>
 
         {% block operation %}{% endblock %}

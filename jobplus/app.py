@@ -6,11 +6,7 @@ from flask_migrate import Migrate
 
 
 def register_blueprints(app):
-<<<<<<< HEAD
-    from .handlers import front, user, company, job
-=======
-    from .handlers import front, user, company, admin, job 
->>>>>>> now
+    from .handlers import front, user, company, admin, job
     app.register_blueprint(front)
     app.register_blueprint(job)
     app.register_blueprint(user)

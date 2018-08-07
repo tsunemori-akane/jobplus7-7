@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-from flask import Blueprint, render_template, url_for, flash, redirect, request, current_app
-from jobplus.forms import CompanyProfileForm
-from flask_login import login_required, current_user
-from jobplus.models import Company, User
-=======
 from flask import Blueprint, render_template, url_for, flash, redirect, request, current_app, abort
 from jobplus.forms import JobForm, CompanyProfileForm
 from flask_login import current_user
 from jobplus.decorators import company_required
-from jobplus.models import Job, User, db
->>>>>>> now
+from jobplus.models import db, Job, User, Company
 
 company = Blueprint('company', __name__, url_prefix='/company')
 
@@ -36,9 +29,6 @@ def profile():
         flash('企业信息更新成功', 'success')
         return redirect(url_for('front.index'))
     return render_template('company/profile.html', form=form)
-<<<<<<< HEAD
-=======
-
 
 
 @company.route('/<int:company_id>/admin', methods=['GET','POST'])
@@ -104,4 +94,3 @@ def delete_job(company_id, job_id):
     db.session.commit()
     flash('删除职位成功', 'success')
     return redirect(url_for('company.admin', company_id=company_id))
->>>>>>> now
