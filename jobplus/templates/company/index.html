@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% from "macros.html" import render_pagination, render_company %}
 
+{% block style %}
+.company_name {
+  line-height: 1.5;
+  min-height: 72px;
+}
+{% endblock %}
+
 {% block title %}company{% endblock %}
 
 
@@ -14,8 +21,8 @@
       {% for company in pagination.items %}
         {{ render_company(company) }}
         {% endfor %}
-    </div>
+  </div>
 
-    {{ render_pagination(pagination, 'company.index') }}
-    {% endblock %}
+{{ render_pagination(pagination, 'company.index') }}
+{% endblock %}
 

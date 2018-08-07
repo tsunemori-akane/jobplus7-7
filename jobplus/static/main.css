@@ -43,3 +43,10 @@
 .company-item {
     text-align: center;
 }
+.nav-navigation {
+  text-align: center;
+}
+.company_name {
+  line-height: 1.5 !important;
+  min-width: 72px !important;
+}

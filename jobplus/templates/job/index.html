@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% from "macros.html" import render_pagination, render_job %}
 
+{% block style %}
+{% endblock %}
 
 {% block title %}job{% endblock %}
 
@@ -10,7 +12,7 @@
     <h1>..</h1>
 </div>
         
-<div class="job-list">
+<div class=" job-list">
     {% for job in pagination.items %}
     {{ render_job(job) }}
     {% endfor %}
