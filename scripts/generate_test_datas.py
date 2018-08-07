@@ -47,7 +47,7 @@ def fake_companies():
             logo = company['logo'],
             address = company['address'].split('：')[1],
             city = company['city'],
-            size = company['size'].split('：')[1],
+            staff_num = company['size'].split('：')[1],
             welfare = welfare, 
             industry = company['industry'],
             user_id = user.id
