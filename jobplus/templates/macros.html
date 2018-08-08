@@ -59,7 +59,10 @@
     <div class="col-md-4">
         <div class="job_item">
             <div class="caption">
+
                 <a href="{{ url_for('job.detail', job_id=job.id) }}"><h3 class='index_title '>{{ job.name }}</h3></a>
+
+                
                 <p>{{ job.work_year }}  {{ job.degree }}</p> 
             </div>
             <hr />
